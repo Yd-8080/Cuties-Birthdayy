@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday, Cutie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..800,100;1,9..144,500..700,100&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light dark;
+  --bg:#fff1f3; --bg2:#ffd9e2; --ink:#4a1730; --soft:#8a4560; --card:#ffffffcc; --accent:#e8436f; --gold:#f2a33c; --flame:#ffb52e;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#1d0b1a; --bg2:#35122c; --ink:#ffe9ee; --soft:#e7a9bd; --card:#ffffff12; --accent:#ff6f95; --gold:#ffc063; --flame:#ffd166;}
+}
+:root[data-theme="dark"]{--bg:#1d0b1a; --bg2:#35122c; --ink:#ffe9ee; --soft:#e7a9bd; --card:#ffffff12; --accent:#ff6f95; --gold:#ffc063; --flame:#ffd166;}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:radial-gradient(120% 80% at 50% 0%,var(--bg2),var(--bg) 70%) fixed;color:var(--ink);font-family:"Fraunces",Georgia,serif;font-variation-settings:"SOFT" 100;line-height:1.6;overflow-x:hidden}
+section{max-width:720px;margin:0 auto;padding:72px 24px;text-align:center}
+h1{font-size:clamp(2.8rem,12vw,5.6rem);line-height:1;margin:0 0 16px;font-weight:700;letter-spacing:-.02em}
+h1 em{font-style:italic;color:var(--accent);font-weight:600}
+h2{font-size:clamp(1.7rem,6vw,2.4rem);margin:0 0 10px;font-weight:600}
+p{margin:0 auto 16px;max-width:56ch}
+.hand{font-family:"Caveat",cursive;font-size:1.7rem;color:var(--soft);line-height:1.2}
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative}
+.countdown{display:flex;gap:12px;justify-content:center;margin-top:28px}
+.countdown div{background:var(--card);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);border-radius:22px;padding:12px 14px;min-width:68px}
+.countdown b{display:block;font-size:1.9rem;font-weight:700;font-variant-numeric:tabular-nums}
+.countdown span{font-size:.85rem;color:var(--soft)}
+.today{font-size:1.4rem;color:var(--accent);font-weight:600}
+.float{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.float i{position:absolute;bottom:-40px;font-style:normal;opacity:.5;animation:rise linear infinite}
+@keyframes rise{to{transform:translateY(-115vh) rotate(25deg)}}
+section,.hero{position:relative;z-index:1}
+.scroll{margin-top:36px;color:var(--soft);text-decoration:none;font-family:"Caveat",cursive;font-size:1.5rem}
+/* cake */
+.cake{width:min(320px,86vw);margin:20px auto 8px;display:block;overflow:visible}
+.flame{cursor:pointer;transform-origin:center bottom;transform-box:fill-box;animation:flick .5s ease-in-out infinite alternate}
+.flame.out{animation:none;opacity:0;transform:scale(.2);transition:all .35s}
+@keyframes flick{from{transform:scale(1) rotate(-3deg)}to{transform:scale(1.08,1.15) rotate(3deg)}}
+.smoke{opacity:0}
+.out+.smoke{animation:smoke 1.4s ease-out}
+@keyframes smoke{0%{opacity:.7;transform:translateY(0)}100%{opacity:0;transform:translateY(-26px)}}
+button{font:inherit;background:var(--accent);color:#fff;border:0;border-radius:999px;padding:12px 26px;font-weight:600;cursor:pointer;box-shadow:0 8px 24px -8px var(--accent)}
+button:focus-visible,.flame:focus-visible,.reason:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.wish{max-height:0;overflow:hidden;opacity:0;transition:all .8s ease}
+.wish.show{max-height:340px;opacity:1;margin-top:18px}
+/* letter */
+.letter{background:var(--card);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);border-radius:28px 28px 28px 6px;padding:34px 28px;text-align:left;backdrop-filter:blur(6px)}
+.letter p{max-width:none;font-size:1.12rem}
+.sign{font-family:"Caveat",cursive;font-size:2rem;color:var(--accent);text-align:right;margin:0}
+/* reasons */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:22px}
+.reason{background:var(--card);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);border-radius:22px;padding:22px 16px;min-height:132px;cursor:pointer;color:inherit;font:inherit;box-shadow:none;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;transition:transform .2s}
+.reason:hover{transform:rotate(-1.5deg)}
+.reason .h{font-size:2rem}
+.reason .t{display:none;font-size:1.02rem}
+.reason.open .t{display:block}.reason.open .h{display:none}
+footer{padding:50px 24px 70px;text-align:center}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+@media (prefers-reduced-motion:reduce){.float,.flame{animation:none}.wish{transition:none}}
+</style>
+</head>
+<body>
+<div class="float" id="float" aria-hidden="true"></div>
+<canvas id="c" aria-hidden="true"></canvas>
+
+<header class="hero">
+  <p class="hand">for my favorite person</p>
+  <h1>Happy Birthday,<br><em>Cutie</em></h1>
+  <p id="sub">Something small and made just for you.</p>
+  <div class="countdown" id="cd" role="timer" aria-live="off"></div>
+  <a class="scroll" href="#cake">make a wish ↓</a>
+</header>
+
+<section id="cake">
+  <h2>Make a wish</h2>
+  <p>Tap each flame to blow out the candles. Don’t tell me what you wished for.</p>
+  <svg class="cake" viewBox="0 0 320 260" role="img" aria-label="Birthday cake with three candles">
+    <ellipse cx="160" cy="242" rx="140" ry="12" fill="#000" opacity=".15"/>
+    <rect x="30" y="170" width="260" height="70" rx="18" fill="#ff9fb8"/>
+    <path d="M30 188c20 18 30-6 50 8s30-8 50 6 30-10 50 6 30-8 50 6 30-8 60 2V172H30z" fill="#fff6f8"/>
+    <rect x="62" y="110" width="196" height="64" rx="16" fill="#ffc2d2"/>
+    <path d="M62 128c18 16 28-6 46 8s28-8 46 6 28-8 46 6 28-8 56 0v-14H62z" fill="#fff6f8"/>
+    <circle cx="96" cy="216" r="6" fill="#fff6f8"/><circle cx="160" cy="220" r="6" fill="#ffd166"/><circle cx="224" cy="216" r="6" fill="#fff6f8"/>
+    <g id="candles"></g>
+  </svg>
+  <button id="blowAll" type="button">Blow them all out</button>
+  <div class="wish" id="wish">
+    <p class="hand" style="font-size:2.2rem;color:var(--accent)">Wish granted 🎉</p>
+    <p>May this year be soft, sweet, and full of everything you’ve been hoping for.</p>
+  </div>
+</section>
+
+<section>
+  <h2>A little letter</h2>
+  <div class="letter">
+    <p>Cutie,</p>
+    <p>I love you so much that I never feel like words are enough. So I built you this little corner of the internet, just to say it properly.</p>
+    <p>You are my everything. You’re the first person I want to tell good news, and the one I want beside me on the hard days. Somehow you make the whole world softer, and me a better person.</p>
+    <p>Your smile is my favorite thing to wake up to. Your laugh is my favorite sound. Your hand in mine is the safest place I know. Loving you is the easiest, happiest thing I’ve ever done.</p>
+    <p>I hope this year gives you every beautiful thing you deserve, and I hope I get to be part of all of it. Thank you for being you, and for choosing me.</p>
+    <p>Happy birthday, my love. You’re my forever, my cutie, my everything.</p>
+    <p class="sign">Yours always, with all my heart ♡</p>
+  </div>
+</section>
+
+<section>
+  <h2>Things I love about you</h2>
+  <p class="hand">tap a heart</p>
+  <div class="grid" id="grid"></div>
+</section>
+
+<footer>
+  <p class="hand" style="font-size:2.2rem">Happy birthday, cutie ♡</p>
+  <button type="button" id="again">Celebrate again</button>
+</footer>
+
+<script>
+(function(){
+  // floating hearts
+  var fl=document.getElementById('float'),em=['♡','✿','✦','♥'];
+  for(var i=0;i<14;i++){var s=document.createElement('i');s.textContent=em[i%4];s.style.left=(i*7.3+3)%100+'%';s.style.fontSize=(14+(i*5)%20)+'px';s.style.color=i%2?'var(--accent)':'var(--gold)';s.style.animationDuration=(14+(i*3)%12)+'s';s.style.animationDelay=(-i*2)+'s';fl.appendChild(s);}
+
+  // countdown to Nov 2, 2026 (local midnight)
+  var target=new Date(2026,10,2,0,0,0),cd=document.getElementById('cd'),sub=document.getElementById('sub');
+  function tick(){
+    var d=target-new Date();
+    if(d<=0){cd.innerHTML='<p class="today">Today is your day 🎂</p>';sub.textContent='Something small and made just for you.';return;}
+    var h=Math.floor(d/36e5),m=Math.floor(d%36e5/6e4),s=Math.floor(d%6e4/1e3);
+    cd.innerHTML='<div><b>'+h+'</b><span>hours</span></div><div><b>'+String(m).padStart(2,'0')+'</b><span>min</span></div><div><b>'+String(s).padStart(2,'0')+'</b><span>sec</span></div>';
+    sub.textContent='Counting down to your special day…';
+  }
+  tick();setInterval(tick,1000);
+
+  // candles
+  var g=document.getElementById('candles'),xs=[110,160,210],NS='http://www.w3.org/2000/svg',left=xs.length;
+  xs.forEach(function(x,i){
+    g.insertAdjacentHTML('beforeend','<rect x="'+(x-5)+'" y="72" width="10" height="40" rx="3" fill="'+['#7bd3ea','#ffd166','#b79cff'][i]+'"/>'+
+      '<g><path class="flame" tabindex="0" role="button" aria-label="Blow out candle '+(i+1)+'" d="M'+x+' 46c10 12 12 20 0 28-12-8-10-16 0-28z" fill="var(--flame)" data-i="'+i+'"/>'+
+      '<path class="smoke" d="M'+x+' 60q6-10 0-18" stroke="#999" fill="none" stroke-width="3" stroke-linecap="round"/></g>');
+  });
+  function out(el){if(el.classList.contains('out'))return;el.classList.add('out');left--;if(left===0){document.getElementById('wish').classList.add('show');boom();}}
+  g.addEventListener('click',function(e){if(e.target.classList.contains('flame'))out(e.target);});
+  g.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('flame')){e.preventDefault();out(e.target);}});
+  document.getElementById('blowAll').onclick=function(){g.querySelectorAll('.flame').forEach(function(f,i){setTimeout(function(){out(f)},i*280)});};
+
+  // reasons
+  var rs=['Your smile lights up every room','You’re the kindest person I know','You make me laugh when I need it most','The way you care about little things','You’re beautiful inside and out','You feel like home to me'];
+  var grid=document.getElementById('grid');
+  rs.forEach(function(t){var b=document.createElement('button');b.type='button';b.className='reason';b.innerHTML='<span class="h">💗</span><span class="t">'+t+'</span>';b.onclick=function(){b.classList.toggle('open');if(b.classList.contains('open'))burst(b.getBoundingClientRect());};grid.appendChild(b);});
+
+  // confetti
+  var cv=document.getElementById('c'),cx=cv.getContext('2d'),P=[],run=false;
+  function size(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio;}size();addEventListener('resize',size);
+  var cols=['#ff6f95','#ffc063','#7bd3ea','#b79cff','#fff','#ff9fb8'];
+  function add(x,y,n,spread){for(var i=0;i<n;i++){var a=Math.random()*Math.PI*2,v=(Math.random()*6+3)*spread;P.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-5,r:Math.random()*5+3,c:cols[i%cols.length],l:120+Math.random()*60,rot:Math.random()*6,heart:Math.random()<.3});}if(!run){run=true;requestAnimationFrame(loop);}}
+  function boom(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;add(innerWidth*.3,innerHeight*.4,90,1.2);add(innerWidth*.7,innerHeight*.4,90,1.2);}
+  function burst(r){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;add(r.left+r.width/2,r.top+r.height/2,26,.8);}
+  function loop(){cx.clearRect(0,0,cv.width,cv.height);var k=devicePixelRatio;
+    P=P.filter(function(p){return p.l>0});
+    P.forEach(function(p){p.vy+=.22;p.x+=p.vx;p.y+=p.vy;p.vx*=.99;p.l--;p.rot+=.1;cx.globalAlpha=Math.min(1,p.l/40);cx.fillStyle=p.c;
+      if(p.heart){cx.font=(p.r*3*k)+'px serif';cx.fillText('♥',p.x*k,p.y*k);}else{cx.save();cx.translate(p.x*k,p.y*k);cx.rotate(p.rot);cx.fillRect(-p.r*k,-p.r*k/2,p.r*2*k,p.r*k);cx.restore();}});
+    if(P.length)requestAnimationFrame(loop);else run=false;}
+  document.getElementById('again').onclick=function(){boom();scrollTo({top:0,behavior:'smooth'});};
+})();
+</script>
+</body>
+</html>
